@@ -12,6 +12,8 @@ find_package(Qt6 CONFIG REQUIRED COMPONENTS Widgets)
 
 add_executable(${PROJECT_NAME}
                 src/main.cpp 
+                src/myemitter.cpp 
+                src/myreceiver.cpp 
 )               
 
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
