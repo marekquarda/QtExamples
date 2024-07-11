@@ -11,9 +11,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt6 CONFIG REQUIRED COMPONENTS Widgets)
 
 add_executable(${PROJECT_NAME} 
-                src/mainwindow.ui
-                src/mainwindow.cpp
-                src/main.cpp
+               src/main.cpp
+               src/myclass.cpp
+               src/stopwatch.cpp 
+               src/window.cpp
 ) 
 
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets)

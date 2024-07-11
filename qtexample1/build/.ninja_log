@@ -1,8 +1,8 @@
 # ninja log v5
 0	117	1720455840993196735	helloworld_autogen/timestamp	765c08aec3bb40b5
+0	117	1720455840993196735	/home/marra/Projects/delproject/qtexample1/build/helloworld_autogen/mocs_compilation.cpp	765c08aec3bb40b5
 0	117	1720455840993196735	helloworld_autogen/mocs_compilation.cpp	765c08aec3bb40b5
 0	117	1720455840993196735	/home/marra/Projects/delproject/qtexample1/build/helloworld_autogen/timestamp	765c08aec3bb40b5
-0	117	1720455840993196735	/home/marra/Projects/delproject/qtexample1/build/helloworld_autogen/mocs_compilation.cpp	765c08aec3bb40b5
 118	845	1720455841725196724	CMakeFiles/helloworld.dir/helloworld_autogen/mocs_compilation.cpp.o	c7765db18f0b7223
 118	982	1720455841861196721	CMakeFiles/helloworld.dir/src/mainwindow.cpp.o	cea6fe561777171a
 118	1021	1720455841901196721	CMakeFiles/helloworld.dir/src/main.cpp.o	68807d0643637b7e
