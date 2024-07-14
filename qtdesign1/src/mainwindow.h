@@ -19,5 +19,6 @@ private:
      Ui::MainWindow *ui;
      void close();
      void save();
+     void search();
 };
 #endif // MAINWINDOW_H
