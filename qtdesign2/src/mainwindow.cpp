@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
- //   Pokus pokus;
     ui->setupUi(this);
+    //connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
 }
 
 MainWindow::~MainWindow()
@@ -15,16 +15,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::close()
-{
-    qDebug() << "Close action was called";
-}
 
-void MainWindow::save()
-{
-    auto text = ui->plainTextEdit->toPlainText();
-    qDebug() << "Save: " + text;
-}
+
+
 
 
 
