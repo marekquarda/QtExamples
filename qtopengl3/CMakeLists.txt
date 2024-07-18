@@ -1,17 +1,15 @@
-# Copyright (C) 2022 The Qt Company Ltd.
-# SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
-
 cmake_minimum_required(VERSION 3.16)
 project(openglwindow LANGUAGES CXX)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui OpenGL)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui OpenGL OpenGLWidgets)
 
 qt_standard_project_setup()
 
 qt_add_executable(openglwindow
     src/main.cpp
-    src/openglwindow.cpp
-    src/openglwindow.h
+    src/mainwindow.cpp
+    src/mainwindow.ui
+    src/mainwindow.h
 )
 
 set_target_properties(openglwindow PROPERTIES
@@ -23,6 +21,7 @@ target_link_libraries(openglwindow PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::OpenGL
+    Qt6::OpenGLWidgets
 )
 
 install(TARGETS openglwindow
@@ -36,5 +35,3 @@ qt_generate_deploy_app_script(
     OUTPUT_SCRIPT deploy_script
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
-#install(SCRIPT ${deploy_script})
-
