@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QtOpenGLWidgets/QtOpenGLWidgets>
+#include "triangleglwidget.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -12,9 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("Qt Morning Adventure");
 
     // Create OpenGL Widget
-    QOpenGLWidget *openGLWidget = new QOpenGLWidget(this);
+    TriangleGLWidget *triangleglwidget = new TriangleGLWidget(this);
 
-    ui->verticalLayout->addWidget(openGLWidget);
+    ui->verticalLayout->addWidget(triangleglwidget);
 
 }
 

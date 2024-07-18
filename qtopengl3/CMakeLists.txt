@@ -10,6 +10,8 @@ qt_add_executable(openglwindow
     src/mainwindow.cpp
     src/mainwindow.ui
     src/mainwindow.h
+    src/triangleglwidget.cpp
+    src/triangleglwidget.h
 )
 
 set_target_properties(openglwindow PROPERTIES
