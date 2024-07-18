@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QOpenGLWidget>
+#include <QOpenGLFunctions>
 
-class TriangleGLWidget : public QOpenGLWidget
+class TriangleGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
@@ -12,8 +13,8 @@ public:
     ~TriangleGLWidget();
 
 protected:
-    void initializeGL();
-    void paintGL();
+    void initializeGL() override;
+    void paintGL() override;
 
 };
 

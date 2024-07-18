@@ -24,6 +24,7 @@ target_link_libraries(openglwindow PRIVATE
     Qt6::Gui
     Qt6::OpenGL
     Qt6::OpenGLWidgets
+    opengl32
 )
 
 install(TARGETS openglwindow
