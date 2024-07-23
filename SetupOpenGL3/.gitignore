@@ -1,0 +1,6 @@
+build/*
+.vscode
+x64/*
+.vs/*
+SetupOpenGL2/*
+
