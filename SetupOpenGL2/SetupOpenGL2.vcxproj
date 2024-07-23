@@ -130,8 +130,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ebo.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\shaders.cpp" />
+    <ClCompile Include="src\vao.cpp" />
+    <ClCompile Include="src\vbo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glfw3.lib" />
@@ -141,7 +145,16 @@
     <ClInclude Include="dependencies\include\glfw3.h" />
     <ClInclude Include="dependencies\include\glfw3native.h" />
     <ClInclude Include="dependencies\include\khrplatform.h" />
-    <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\ebo.h" />
+    <ClInclude Include="src\shaders.h" />
+    <ClInclude Include="src\vao.h" />
+    <ClInclude Include="src\vbo.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="default.frag" />
+    <None Include="default.vert" />
+    <None Include="res\default.frag" />
+    <None Include="res\default.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
