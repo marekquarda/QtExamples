@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "shaders.h"
+#include "bunny.h"
 
 #define GL_COLOR_BUFFER_BIT 0x00004000        
 
@@ -20,31 +21,42 @@ int main() {
 
     init();
 
+ //  glEnable(GL_DEPTH_TEST);
+/*
     float vertices[] = {
-        -1,-1,0,1,
-        +1,-1,0,1,
-        -1,+1,0,1,
-        // colors
-        1,0,0,
-        0,1,0,
-        0,0,1,
+        // position / colors
+        -1,-1,0,1, 1,0,0,
+        +1,-1,0,1, 0,1,0,
+        -1,+1,0,1, 0,0,1, 
+        +1,+1,0,1, 1,1,1,
     };
+
+    uint32_t indices[] = {
+        0,1,2,2,1,3
+    };*/
+
     GLuint vbo;
     glCreateBuffers(1,&vbo);
-    glNamedBufferData(vbo, sizeof(float)*(4*3+3*3), vertices, GL_DYNAMIC_DRAW);
+    glNamedBufferData(vbo, sizeof(bunnyVertices), bunnyVertices, GL_DYNAMIC_DRAW);
+
+    GLuint ebo;
+    glCreateBuffers(1,&ebo);
+    glNamedBufferData(ebo, sizeof(bunnyIndices), bunnyIndices, GL_DYNAMIC_DRAW);
 
     GLuint vao;
     glCreateVertexArrays(1, &vao);
     // Coord
-    glVertexArrayAttribFormat(vao, 0, 4, GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(float)*4);
+    glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
+    glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(BunnyVertex));
     glVertexArrayAttribBinding(vao, 0,0);
     glEnableVertexArrayAttrib(vao, 0);
     // Colors
     glVertexArrayAttribFormat(vao, 1, 3,GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayVertexBuffer(vao, 1, vbo, sizeof(float)*12, sizeof(float)*3);
+    glVertexArrayVertexBuffer(vao, 1, vbo, sizeof(float)*(3), sizeof(BunnyVertex));
     glVertexArrayAttribBinding(vao, 1,1);
     glEnableVertexArrayAttrib(vao, 1);
+
+    glVertexArrayElementBuffer(vao, ebo);
 
     Shaders shaderProgram("res/default.vert", "res/default.frag");
     
@@ -104,7 +116,8 @@ int main() {
 
         glBindVertexArray(vao); 
         glUseProgram(shaderProgram.ID); 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        //glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawElements(GL_TRIANGLES, sizeof(bunnyIndices)/sizeof(VertexIndex), GL_UNSIGNED_INT,nullptr);
 
         SDL_GL_SwapWindow(window);
     }

@@ -25,6 +25,7 @@ add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND} -E copy_directory
 
 add_executable(${PROJECT_NAME} src/main.cpp
                                src/shaders.cpp 
+                               src/bunny.cpp
 #                               src/shaders.h
 )
 
