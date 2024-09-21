@@ -50,6 +50,7 @@ Shaders::Shaders(const char* vertexFile, const char* fragmentFile) {
     gl::glAttachShader(ID, fragmentShader);
     // Wrap-up/Link all the shaders together into the Shader Program
     gl::glLinkProgram(ID);
+    //std::cout << "Check program initil ... " << std::endl;
     // Check if Shaders linked sucessfully 
     compileErrors(ID, "PROGRAM");
 
@@ -75,13 +76,13 @@ void Shaders::compileErrors(unsigned int shader, const char* type) {
         gl::glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
         if (hasCompiled == GL_FALSE) {
             gl::glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-            std::cerr << "SHADER_COMPILATION_ERROR for: " << type << "\n" << std::endl;
+            std::cerr << "SHADER_COMPILATION_ERROR for " << type << ": " << infoLog << std::endl;
         }
     } else {
         gl::glGetProgramiv(shader, GL_COMPILE_STATUS, &hasCompiled);
         if (hasCompiled == GL_FALSE) {
             gl::glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-            std::cerr << "SHADER_LINKING_ERROR for: " << type << "\n" << std::endl;
+            std::cerr << "SHADER_LINKING_ERROR for " << type << ": " << infoLog << std::endl;
         }
     }
 }

@@ -51,7 +51,7 @@ int main() {
     glVertexArrayAttribBinding(vao, 0,0);
     glEnableVertexArrayAttrib(vao, 0);
     // Colors
-    glVertexArrayAttribFormat(vao, 1, 3,GL_FLOAT, GL_FALSE, 0);
+    glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, 0);
     glVertexArrayVertexBuffer(vao, 1, vbo, sizeof(float)*(3), sizeof(BunnyVertex));
     glVertexArrayAttribBinding(vao, 1,1);
     glEnableVertexArrayAttrib(vao, 1);
@@ -82,7 +82,7 @@ int main() {
     float zoomSpeed = 0.02f;
 
     // Cutting enabled
-    //glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
 
     bool running = true;
     while(running) {
@@ -95,11 +95,11 @@ int main() {
                 if (event.motion.state & SDL_BUTTON_LMASK) {
                     yAngle -= event.motion.xrel*sensitivity;
                     xAngle += event.motion.yrel*sensitivity;
-//                    cout << "Mouse motion angle detected: " << yAngle << endl;
+                    xAngle = glm::clamp(xAngle,-glm::radians(89.f),+glm::radians(89.f));
                 }
                 if (event.motion.state & SDL_BUTTON_RMASK) {
                     camDistance += event.motion.yrel*zoomSpeed;
-//                    cout << "Mouse motion cam detected: " << camDistance << endl;
+                    camDistance = glm::clamp(camDistance, 0.f, 100.f);
                 }
                 
             }
@@ -108,7 +108,7 @@ int main() {
         shaderProgram.Activate();
 
         glClearColor(0,0,0,1);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //glPointSize(10);
 
         mat4 V = lookAt(vec3(sin(yAngle)*cos(xAngle),sin(xAngle),cos(yAngle)*cos(xAngle))*camDistance,vec3(0.f),vec3(0,1,0));
@@ -119,7 +119,7 @@ int main() {
         //glDrawArrays(GL_TRIANGLES, 0, 6);
         glDrawElements(GL_TRIANGLES, sizeof(bunnyIndices)/sizeof(VertexIndex), GL_UNSIGNED_INT,nullptr);
 
-        SDL_GL_SwapWindow(window);
+        SDL_GL_SwapWindow(window); 
     }
 
     // Delete program (shaders deleted during initialiation)

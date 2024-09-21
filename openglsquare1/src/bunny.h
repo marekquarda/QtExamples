@@ -9,14 +9,7 @@
 
 #pragma once
 
-
-#include "fwd.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+#include <stdint.h>
 
 /**
  * @brief This structure represents vertex that contains only position and
@@ -32,10 +25,8 @@ typedef struct BunnyVertex
 /// This variable contains vertices of Standford bunny.
 extern const BunnyVertex bunnyVertices[1048];
 
+using VertexIndex = uint32_t; // < type of index
+
 /// This variable contains Standford bunny indices.
 extern const VertexIndex bunnyIndices[2092][3];
 
-
-#ifdef __cplusplus
-}
-#endif
