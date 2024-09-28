@@ -4,7 +4,7 @@ SDL-release/CMakeFiles/SDL2-static.dir/src/joystick/virtual/SDL_virtualjoystick.
  /home/marra/Projects/OpenGlExamples/QtExamples/izOpenGl1/SDL-release/src/joystick/virtual/../../SDL_internal.h \
  /home/marra/Projects/OpenGlExamples/QtExamples/izOpenGl1/SDL-release/src/joystick/virtual/../../dynapi/SDL_dynapi.h \
  /home/marra/Projects/OpenGlExamples/QtExamples/izOpenGl1/SDL-release/src/joystick/virtual/../../dynapi/SDL_dynapi_overrides.h \
- /home/marra/Projects/OpenGlExamples/QtExamples/izOpenGl1/build/SDL-release/include-config-/SDL2/SDL_config.h \
+ /home/marra/Projects/OpenGlExamples/QtExamples/izOpenGl1/build/SDL-release/include-config-debug/SDL2/SDL_config.h \
  /home/marra/Projects/OpenGlExamples/QtExamples/izOpenGl1/build/SDL-release/include/SDL2/SDL_platform.h \
  /home/marra/Projects/OpenGlExamples/QtExamples/izOpenGl1/build/SDL-release/include/SDL2/begin_code.h \
  /home/marra/Projects/OpenGlExamples/QtExamples/izOpenGl1/build/SDL-release/include/SDL2/close_code.h \
