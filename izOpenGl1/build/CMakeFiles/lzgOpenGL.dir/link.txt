@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/lzgOpenGL.dir/src/main.cpp.o CMakeFiles/lzgOpenGL.dir/src/bunny.cpp.o -o lzgOpenGL  SDL-release/libSDL2d.a SDL-release/libSDL2maind.a geGL/libgeGLd.a glm/glm/libglmd.a -lm -pthread 

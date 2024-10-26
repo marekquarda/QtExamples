@@ -1,0 +1,160 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"geGL/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 143,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 150,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 160,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 182,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 195,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"geGL/libgeGLd.a"
+			],
+			"targetId" : "geGL::@e55a6fe4d7be73aeba9e",
+			"targetIndex" : 3,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Devel",
+			"destination" : "include/geGL",
+			"paths" : 
+			[
+				"geGL/src/geGL/Fwd.h",
+				"geGL/src/geGL/Definitions.h",
+				"geGL/src/geGL/Buffer.h",
+				"geGL/src/geGL/VertexArray.h",
+				"geGL/src/geGL/Framebuffer.h",
+				"geGL/src/geGL/Texture.h",
+				"geGL/src/geGL/Sampler.h",
+				"geGL/src/geGL/ProgramPipeline.h",
+				"geGL/src/geGL/Shader.h",
+				"geGL/src/geGL/Program.h",
+				"geGL/src/geGL/ProgramInfo.h",
+				"geGL/src/geGL/Renderbuffer.h",
+				"geGL/src/geGL/OpenGL.h",
+				"geGL/src/geGL/OpenGLUtil.h",
+				"geGL/src/geGL/AsynchronousQuery.h",
+				"geGL/src/geGL/DebugMessage.h",
+				"geGL/src/geGL/OpenGLObject.h",
+				"geGL/src/geGL/geGL.h",
+				"geGL/src/geGL/OpenGLFunctionTable.h",
+				"geGL/src/geGL/OpenGLContext.h",
+				"geGL/src/geGL/OpenGLCapabilities.h",
+				"geGL/src/geGL/FunctionLoaderInterface.h",
+				"geGL/src/geGL/DefaultLoader.h",
+				"geGL/src/geGL/LoaderTableDecorator.h",
+				"geGL/src/geGL/DSATableDecorator.h",
+				"geGL/src/geGL/TrapTableDecorator.h",
+				"geGL/src/geGL/CapabilitiesTableDecorator.h",
+				"geGL/src/geGL/StaticCalls.h",
+				"geGL/src/geGL/GLSLNoise.h",
+				"build/geGL/geGL/gegl_export.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Devel",
+			"destination" : "include/geGL/Generated",
+			"paths" : 
+			[
+				"geGL/src/geGL/Generated/ContextCalls.h",
+				"geGL/src/geGL/Generated/ContextDeclarations.h",
+				"geGL/src/geGL/Generated/FunctionTableCalls.h",
+				"geGL/src/geGL/Generated/LoaderImplementation.h",
+				"geGL/src/geGL/Generated/LoaderLoadingCalls.h",
+				"geGL/src/geGL/Generated/NumberOfFunctions.h",
+				"geGL/src/geGL/Generated/MemberOpenGLFunctions.h",
+				"geGL/src/geGL/Generated/MemberOpenGLPFN.h",
+				"geGL/src/geGL/Generated/OpenGLConstants.h",
+				"geGL/src/geGL/Generated/OpenGLFunctions.h",
+				"geGL/src/geGL/Generated/OpenGLPFN.h",
+				"geGL/src/geGL/Generated/OpenGLTypes.h",
+				"geGL/src/geGL/Generated/TrapCalls.h",
+				"geGL/src/geGL/Generated/TrapImplementation.h"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/geGL",
+			"exportName" : "geGLTargets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "geGL::@e55a6fe4d7be73aeba9e",
+					"index" : 3
+				}
+			],
+			"paths" : 
+			[
+				"geGL/CMakeFiles/Export/5393ca3d7db93097ba02c25a5cd379af/geGLTargets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "Devel",
+			"destination" : "lib/cmake/geGL",
+			"paths" : 
+			[
+				"build/geGL/geGL/geGLConfig.cmake",
+				"build/geGL/geGL/geGLConfigVersion.cmake"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "geGL",
+		"source" : "geGL"
+	}
+}
