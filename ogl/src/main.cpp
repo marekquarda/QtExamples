@@ -1,6 +1,11 @@
 #include <iostream>
 #include <SDL.h>
+<<<<<<< HEAD
 #include "glew.h"
+=======
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+>>>>>>> 6d904a26d4c70ec8fb2b75127951cab67858b308
 
 std::string getInfoLog(GLuint obj, 
     decltype(glGetShaderiv)const&getiv, 
@@ -84,7 +89,7 @@ void programLog() {
 int main() {
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    auto window = SDL_CreateWindow("OGL Windows", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, SDL_WINDOW_OPENGL);
+    auto window = SDL_CreateWindow("OGL Windows", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_OPENGL);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     auto context = SDL_GL_CreateContext(window);
@@ -97,14 +102,16 @@ int main() {
     // Vertex Shader = GLSL
     R".(
         #version 430
+        
+        uniform uint M = 20;
+        uniform uint N = 20;
 
         out vec3 vColor;
-        void main() {
-            vColor = vec3(1);
-            uint M = 20;
-            uint N = 20;
-            uint chl = gl_VertexID / 6;
-            uint vid = gl_VertexID % 6;
+        out vec3 vNormal;
+
+        uniform uint mode = 0;
+
+        vec3 getPosition(uint chl, uint vid) {
             uint xOffset[6] = {
                 0,1,0,0,1,1,
             };
@@ -119,24 +126,63 @@ int main() {
             float x = cos(ax)*sin(ay);
             float z = sin(ax)*sin(ay);
             float y = -cos(ay);
-            gl_Position = vec4(x,y,z,1);
-        };
+
+            return vec3(x,y,z);
+        }
+
+        void main() {
+            vColor = vec3(1);
+            uint chl = gl_VertexID / 6;
+            uint vid = gl_VertexID % 6;
+
+            vec3 pos = getPosition(chl, vid);
+            vec3 normal;
+            if (mode == 0) {
+                // flat shading 
+                normal = getPosition(chl, 0);    
+            } else {
+                // gouraud shading
+                normal = pos;
+            }
+            if (mode == 2) {
+                vNormal = normal;
+            } else {
+                vec3 L = normalize(vec3(10,10,-50));
+                float df = dot(normal,L);
+                vColor = vec3(df);
+            }
+
+            gl_Position = vec4(pos,1);
+        }
     ).", 
     // Fragment shader = GLSL
     R".(
         #version 430
         in vec3 vColor;
+        in vec3 vNormal;
         out vec4 fColor;
 
+        uniform uint mode = 0;
+
         void main() {
-            fColor = vec4(vColor,1);
-        };
+            // light 
+            if(mode == 2) {
+                vec3 normal = normalize(vNormal);
+                vec3 L = normalize(vec3(10,10,-50));
+                // difuse factor
+                float df = dot(normal,L);
+                fColor = vec4(df);
+            } else {
+                //vColor = vec3(df);
+                fColor = vec4(vColor,1);
+            }
+        }
     )."
     );
     GLuint vao;
     glCreateVertexArrays(1, &vao);
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // using GLCLEARCOLORPROC = void(*)(float, float, float, float);
     // using GLCLEARPROC = void(*)(uint32_t);
@@ -144,6 +190,7 @@ int main() {
     // auto glClear = (GLCLEARPROC) SDL_GL_GetProcAddress("glClear");
 
     bool running = true;
+    
     SDL_Event event;
     while (running)
     {
@@ -162,9 +209,18 @@ int main() {
 
         glUseProgram(prg);
         glBindVertexArray(vao);
+ 
+        uint32_t const M = 10;
+        uint32_t const N = 10;
 
-        uint32_t const M = 20;
-        uint32_t const N = 20;
+        glProgramUniform1ui(prg, glGetUniformLocation(prg, "N"), N);
+        glProgramUniform1ui(prg, glGetUniformLocation(prg, "M"), M);
+
+        static uint32_t mode = 0;    
+        glProgramUniform1ui(prg, glGetUniformLocation(prg, "mode"), (mode/50)%3);
+        //glProgramUniform1ui(prg, glGetUniformLocation(prg, "mode"), mode);
+        mode++;
+
         glDrawArrays(GL_TRIANGLES, 0, M*N*3*2);
         //glDrawArrays(GL_POINTS, 0, M*N*3*2);
 
