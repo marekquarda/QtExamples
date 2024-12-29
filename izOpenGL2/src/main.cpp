@@ -3,6 +3,7 @@
 #include "geGL/geGL.h"
 #include "geGL/StaticCalls.h"
 #include "glm/gtc/matrix_transform.hpp"
+#include "bunny.h"
 
 using namespace ge::gl;
 
@@ -63,35 +64,38 @@ int main(int args, char*argv[]) {
 
     init();
 
-    float vertices[] = {
-        // coord   rgb
-        -1,-1,0,1,  1,0,0,
-        +1,-1,0,1,  0,1,0,
-        -1,+1,0,1,  0,0,1,
-        +1,+1,0,1,  1,1,1
-    };
+    // float vertices[] = {
+    //     // coord   rgb
+    //     -1,-1,0,1,  1,0,0,
+    //     +1,-1,0,1,  0,1,0,
+    //     -1,+1,0,1,  0,0,1,
+    //     +1,+1,0,1,  1,1,1
+    // };
 
-    uint32_t indices[] = {
-        0,1,2,2,1,3
-    };
+    // uint32_t indices[] = {
+    //     0,1,2,2,1,3
+    // };
+
+    glEnable(GL_DEPTH_TEST);
 
     GLuint vbo;
     glCreateBuffers(1, &vbo);
-    glNamedBufferData(vbo, sizeof(float)*((4+3)*4), vertices, GL_DYNAMIC_DRAW);
+    glNamedBufferData(vbo, sizeof(bunnyVertices), bunnyVertices, GL_DYNAMIC_DRAW);
 
     GLuint ebo;
     glCreateBuffers(1, &ebo);
-    glNamedBufferData(ebo, sizeof(uint32_t)*6, indices, GL_DYNAMIC_DRAW);
+    glNamedBufferData(ebo, sizeof(bunnyIndices), bunnyIndices, GL_DYNAMIC_DRAW);
+
 
     GLuint vao;
     glCreateVertexArrays(1, &vao);
-    glVertexArrayAttribFormat(vao, 0, 4, GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(float)*7);
+    glVertexArrayAttribFormat(vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
+    glVertexArrayVertexBuffer(vao, 0, vbo, 0, sizeof(BunnyVertex));
     glVertexArrayAttribBinding(vao, 0, 0);
     glEnableVertexArrayAttrib(vao, 0);
 
     glVertexArrayAttribFormat(vao, 1, 3, GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayVertexBuffer(vao, 1, vbo, sizeof(float)*4, sizeof(float)*7);
+    glVertexArrayVertexBuffer(vao, 1, vbo, sizeof(float)*3, sizeof(BunnyVertex));
     glVertexArrayAttribBinding(vao, 1,1);
     glEnableVertexArrayAttrib(vao, 1);
 
@@ -101,9 +105,10 @@ int main(int args, char*argv[]) {
         R".(
             #version 460
 
-            layout(location=0)in vec4 position;
-            layout(location=1)in vec3 color;
-            out vec3 vColor;
+            layout(location=0)in vec3 position;
+            layout(location=1)in vec3 normal;
+            out vec3 vNormal;
+            out vec3 vPosition;
 
             uniform mat4 modelMatrix = mat4(1.f);
             uniform mat4 viewMatrix = mat4(1.f);
@@ -111,8 +116,9 @@ int main(int args, char*argv[]) {
 
             void main() {
                 mat4 mvp = projMatrix*modelMatrix*viewMatrix;
-                vColor = color;
-                gl_Position = mvp*position;
+                vNormal = normal;
+                gl_Position = mvp*vec4(position,1);
+                vPosition = vec3(modelMatrix*vec4(position,1));
             }
         ).";
 
@@ -121,9 +127,31 @@ int main(int args, char*argv[]) {
             #version 450
 
             out vec4 fColor;
-            in vec3 vColor;
+            uniform vec3 light = vec3(10,10,10);
+            uniform mat4 viewMatrix = mat4(1.f);
+            in vec3 vPosition;
+            in vec3 vNormal;
             void main() {
-                fColor = vec4(vColor,1);
+                vec3 cameraPosition = vec3(inverse(viewMatrix)*vec4(0,0,0,1));
+
+                vec3 N = normalize(vNormal);
+                vec3 L = normalize(light-vPosition);
+                vec3 diffuseMaterial = vec3(0.4,0.5,0.7);
+                vec3 lightColor = vec3(1,1,1);
+                float df = clamp(dot(N,L),0,1);
+                float af = 0.2;
+                vec3 ld = df*diffuseMaterial*lightColor;
+                vec3 la = diffuseMaterial*af;
+
+                vec3 V = normalize(cameraPosition -vPosition);
+                vec3 R = -reflect(V,N);
+
+                float sf = pow(clamp(dot(R,L),0,1),30);
+                vec3 ls = lightColor*sf;
+
+                vec3 finalColor = ld+la+ls;
+
+                fColor = vec4(finalColor,1);
             }
         ).";
 
@@ -163,9 +191,11 @@ int main(int args, char*argv[]) {
                 if (event.motion.state & SDL_BUTTON_LMASK) {
                     yAngle -= event.motion.xrel*sensitivity;
                     xAngle += event.motion.yrel*sensitivity;
+                    xAngle = glm::clamp(xAngle,-glm::radians(89.f),glm::radians(89.f));
                 }
                 if (event.motion.state & SDL_BUTTON_RMASK) {
                     cameraDistance += event.motion.yrel*zoomSpeed;
+                    cameraDistance = glm::clamp(cameraDistance, 0.f,100.f);
                 }
             }
         }
@@ -178,7 +208,7 @@ int main(int args, char*argv[]) {
 
         glBindVertexArray(vao);
         glUseProgram(prg);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, sizeof(bunnyIndices)/sizeof(VertexIndex), GL_UNSIGNED_INT, nullptr);
 
         SDL_GL_SwapWindow(window);
 
